@@ -25,6 +25,9 @@ function build() {
     let menu2 = new PIXI.Sprite(sheet.textures["menu-2.png"]);
     let menu3 = new PIXI.Sprite(sheet.textures["menu-3.png"]);
     let ok = new PIXI.Sprite(sheet.textures["ok.png"]);
+    let newstair1 = new PIXI.Sprite(sheet.textures["new_stair_01.png"]);
+    let newstair2 = new PIXI.Sprite(sheet.textures["new_stair_02.png"]);
+    let newstair3 = new PIXI.Sprite(sheet.textures["new_stair_03.png"]);
 
     austin.position.set(696, 113);
     bookstand.position.set(834, 0);
@@ -64,17 +67,23 @@ function build() {
 
     menu1.on('pointertap', () => {
         ok.position.set(845, 148);
-        app.stage.addChild(ok);
+        newstair1.position.set(905, 15);
+        app.stage.removeChild(oldstair, newstair2, newstair3);
+        app.stage.addChild(newstair1, ok, plant3);
     });
 
     menu2.on('pointertap', () => {
         ok.position.set(975, 148);
-        app.stage.addChild(ok);
+        newstair2.position.set(905, 15);
+        app.stage.removeChild(oldstair, newstair1, newstair3);
+        app.stage.addChild(newstair2, ok, plant3);
     });
 
     menu3.on('pointertap', () => {
         ok.position.set(1105, 145);
-        app.stage.addChild(ok);
+        newstair3.position.set(905, 15);
+        app.stage.removeChild(oldstair, newstair1, newstair2);
+        app.stage.addChild(newstair3, ok, plant3);
     });
 }
 
