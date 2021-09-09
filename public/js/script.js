@@ -21,6 +21,10 @@ function build() {
     let btn = new PIXI.Sprite(sheet.textures["btn.png"]);
     let oldstair = new PIXI.Sprite(sheet.textures["old_stair.png"]);
     let hammer = new PIXI.Sprite(sheet.textures["hammer.png"]);
+    let menu1 = new PIXI.Sprite(sheet.textures["menu-1.png"]);
+    let menu2 = new PIXI.Sprite(sheet.textures["menu-2.png"]);
+    let menu3 = new PIXI.Sprite(sheet.textures["menu-3.png"]);
+    let ok = new PIXI.Sprite(sheet.textures["ok.png"]);
 
     austin.position.set(696, 113);
     bookstand.position.set(834, 0);
@@ -34,7 +38,43 @@ function build() {
     btn.position.set(502, 499);
     oldstair.position.set(833, 54);
     hammer.position.set(1087, 258);
+    menu1.position.set(845, 5);
+    menu2.position.set(975, 5);
+    menu3.position.set(1105, 5);
 
-    app.stage.addChild(background, austin, bookstand, globe, logo, plant, plant2, sofa, table, btn, oldstair, plant3, hammer);
+    hammer.interactive = true;
+    hammer.buttonMode = true;
+    menu1.interactive = true;
+    menu1.buttonMode = true;
+    menu2.interactive = true;
+    menu2.buttonMode = true;
+    menu3.interactive = true;
+    menu3.buttonMode = true;
+
+    app.stage.addChild(background, austin, bookstand, globe, logo, plant, plant2, sofa, table, btn, oldstair, plant3);
+    function drowhammer () {
+        app.stage.addChild(hammer)
+    }
+    setTimeout(drowhammer, 1500);
+
+    hammer.on('pointertap', () => {
+        app.stage.addChild(menu1, menu2, menu3)
+        app.stage.removeChild(hammer);
+    });
+
+    menu1.on('pointertap', () => {
+        ok.position.set(845, 148);
+        app.stage.addChild(ok);
+    });
+
+    menu2.on('pointertap', () => {
+        ok.position.set(975, 148);
+        app.stage.addChild(ok);
+    });
+
+    menu3.on('pointertap', () => {
+        ok.position.set(1105, 145);
+        app.stage.addChild(ok);
+    });
 }
 
