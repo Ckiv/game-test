@@ -1,5 +1,6 @@
 // Create the application helper and add its render target to the page
 const app = new PIXI.Application({ width: 1360, height: 640});
+let ticker = PIXI.Ticker.shared;
 document.body.appendChild(app.view);
 
 PIXI.Loader.shared.add("../images/spritesheet.json").load(build);
@@ -8,6 +9,7 @@ const circle1 = new PIXI.Graphics();
 const circle2 = new PIXI.Graphics();
 const circle3 = new PIXI.Graphics();
 let count=0;
+let temp=1;
 
 function build() {
 
@@ -77,7 +79,13 @@ function build() {
     menu1.on('pointertap', () => {
         activeItem("menu1");
         ok.position.set(845, 148);
-        newstair1.position.set(905, 15);
+        app.ticker.add((delta) => {
+                newstair1.position.set(905, 5+temp);
+                temp += 0.5;
+                if (5+temp>15) {
+                    app.ticker.stop();
+                }
+        });
         app.stage.removeChild(oldstair, newstair2, newstair3);
         app.stage.addChild(newstair1, ok, plant3);
     });
@@ -85,7 +93,13 @@ function build() {
     menu2.on('pointertap', () => {
         activeItem("menu2");
         ok.position.set(975, 148);
-        newstair2.position.set(905, 15);
+        app.ticker.add((delta) => {
+            newstair2.position.set(905, 5+temp);
+            temp += 0.5;
+            if (5+temp>15) {
+                app.ticker.stop();
+            }
+        });
         app.stage.removeChild(oldstair, newstair1, newstair3);
         app.stage.addChild(newstair2, ok, plant3);
     });
@@ -93,7 +107,13 @@ function build() {
     menu3.on('pointertap', () => {
         activeItem("menu3");
         ok.position.set(1105, 148);
-        newstair3.position.set(905, 15);
+        app.ticker.add((delta) => {
+            newstair3.position.set(905, 5+temp);
+            temp += 0.5;
+            if (5+temp>15) {
+                app.ticker.stop();
+            }
+        });
         app.stage.removeChild(oldstair, newstair1, newstair2);
         app.stage.addChild(newstair3, ok, plant3);
     });
@@ -105,12 +125,9 @@ function build() {
     });
 
     app.ticker.add((delta) => {
-
         btn.scale.x = 1 + Math.sin(count) * 0.02;
         btn.scale.y = 1 + Math.cos(count) * 0.02;
         count += 0.1;
-
-        console.log(count);
     });
 
     function drawCircle() {
