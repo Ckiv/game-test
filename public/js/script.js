@@ -79,13 +79,14 @@ function build() {
     menu1.on('pointertap', () => {
         activeItem("menu1");
         ok.position.set(845, 148);
-        app.ticker.add((delta) => {
+        /*app.ticker.add((delta) => {
                 newstair1.position.set(905, 5+temp);
                 temp += 0.5;
                 if (5+temp>15) {
                     app.ticker.stop();
                 }
-        });
+        });*/
+        newstair1.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair2, newstair3);
         app.stage.addChild(newstair1, ok, plant3);
     });
@@ -93,13 +94,14 @@ function build() {
     menu2.on('pointertap', () => {
         activeItem("menu2");
         ok.position.set(975, 148);
-        app.ticker.add((delta) => {
+        /*app.ticker.add((delta) => {
             newstair2.position.set(905, 5+temp);
             temp += 0.5;
             if (5+temp>15) {
                 app.ticker.stop();
             }
-        });
+        });*/
+        newstair2.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair1, newstair3);
         app.stage.addChild(newstair2, ok, plant3);
     });
@@ -107,13 +109,14 @@ function build() {
     menu3.on('pointertap', () => {
         activeItem("menu3");
         ok.position.set(1105, 148);
-        app.ticker.add((delta) => {
+        /*app.ticker.add((delta) => {
             newstair3.position.set(905, 5+temp);
             temp += 0.5;
             if (5+temp>15) {
                 app.ticker.stop();
             }
-        });
+        });*/
+        newstair3.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair1, newstair2);
         app.stage.addChild(newstair3, ok, plant3);
     });
