@@ -4,6 +4,11 @@ document.body.appendChild(app.view);
 
 PIXI.Loader.shared.add("../images/spritesheet.json").load(build);
 
+const circle1 = new PIXI.Graphics();
+const circle2 = new PIXI.Graphics();
+const circle3 = new PIXI.Graphics();
+let count=0;
+
 function build() {
 
     let sheet = PIXI.Loader.shared.resources["../images/spritesheet.json"].spritesheet;
@@ -43,9 +48,9 @@ function build() {
     btn.position.set(684, 561);
     oldstair.position.set(833, 54);
     hammer.position.set(1087, 258);
-    menu1.position.set(845, 5);
-    menu2.position.set(975, 5);
-    menu3.position.set(1105, 5);
+    menu1.position.set(869, 5);
+    menu2.position.set(1000, 5);
+    menu3.position.set(1124, 5);
 
     hammer.interactive = true;
     hammer.buttonMode = true;
@@ -65,11 +70,12 @@ function build() {
     setTimeout(drowhammer, 1500);
 
     hammer.on('pointertap', () => {
-        app.stage.addChild(menu1, menu2, menu3)
+        drawCircle();
         app.stage.removeChild(hammer);
     });
 
     menu1.on('pointertap', () => {
+        activeItem("menu1");
         ok.position.set(845, 148);
         newstair1.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair2, newstair3);
@@ -77,6 +83,7 @@ function build() {
     });
 
     menu2.on('pointertap', () => {
+        activeItem("menu2");
         ok.position.set(975, 148);
         newstair2.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair1, newstair3);
@@ -84,7 +91,8 @@ function build() {
     });
 
     menu3.on('pointertap', () => {
-        ok.position.set(1105, 145);
+        activeItem("menu3");
+        ok.position.set(1105, 148);
         newstair3.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair1, newstair2);
         app.stage.addChild(newstair3, ok, plant3);
@@ -96,15 +104,61 @@ function build() {
         app.stage.addChild(final);
     });
 
-    let ticker = PIXI.Ticker.shared;
-    ticker.deltaMS = 10;
-
     app.ticker.add((delta) => {
 
-        // rotate the container!
-        // use delta to create frame-independent transform
-        console.log(delta);
-        btn.scale.set(delta)
+        btn.scale.x = 1 + Math.sin(count) * 0.02;
+        btn.scale.y = 1 + Math.cos(count) * 0.02;
+        count += 0.1;
+
+        console.log(count);
     });
+
+    function drawCircle() {
+
+        circle1.lineStyle(2, 0xFFFFFF, 1);
+        circle1.beginFill(0xf9d2a7, 1);
+        circle1.drawCircle(908, 70, 55);
+        circle1.endFill();
+
+        circle2.lineStyle(2, 0xFFFFFF, 1);
+        circle2.beginFill(0xf9d2a7, 1);
+        circle2.drawCircle(1038, 70, 55);
+        circle2.endFill();
+
+        circle3.lineStyle(2, 0xFFFFFF, 1);
+        circle3.beginFill(0xf9d2a7, 1);
+        circle3.drawCircle(1168, 70, 55);
+        circle3.endFill();
+
+        app.stage.addChild(circle1, circle2, circle3, menu1, menu2, menu3);
+    }
+
+    function activeItem(temp) {
+        drawCircle();
+
+        if (temp==="menu1") {
+            circle1.lineStyle(2, 0xFFFFFF, 1);
+            circle1.beginFill(0xb8e213, 1);
+            circle1.drawCircle(908, 70, 55);
+            circle1.endFill();
+            app.stage.addChild(circle1, menu1);
+        }
+        else if (temp==="menu2") {
+            circle2.lineStyle(2, 0xFFFFFF, 1);
+            circle2.beginFill(0xb8e213, 1);
+            circle2.drawCircle(1038, 70, 55);
+            circle2.endFill();
+            app.stage.addChild(circle2, menu2);
+        }
+        else if (temp==="menu3") {
+            circle3.lineStyle(2, 0xFFFFFF, 1);
+            circle3.beginFill(0xb8e213, 1);
+            circle3.drawCircle(1168, 70, 55);
+            circle3.endFill();
+            app.stage.addChild(circle3, menu3);
+        }
+
+
+    }
 }
 
