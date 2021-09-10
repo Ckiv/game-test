@@ -21,13 +21,14 @@ function build() {
     let btn = new PIXI.Sprite(sheet.textures["btn.png"]);
     let oldstair = new PIXI.Sprite(sheet.textures["old_stair.png"]);
     let hammer = new PIXI.Sprite(sheet.textures["hammer.png"]);
-    let menu1 = new PIXI.Sprite(sheet.textures["menu-1.png"]);
-    let menu2 = new PIXI.Sprite(sheet.textures["menu-2.png"]);
-    let menu3 = new PIXI.Sprite(sheet.textures["menu-3.png"]);
+    let menu1 = new PIXI.Sprite(sheet.textures["menu_1.png"]);
+    let menu2 = new PIXI.Sprite(sheet.textures["menu_2.png"]);
+    let menu3 = new PIXI.Sprite(sheet.textures["menu_3.png"]);
     let ok = new PIXI.Sprite(sheet.textures["ok.png"]);
     let newstair1 = new PIXI.Sprite(sheet.textures["new_stair_01.png"]);
     let newstair2 = new PIXI.Sprite(sheet.textures["new_stair_02.png"]);
     let newstair3 = new PIXI.Sprite(sheet.textures["new_stair_03.png"]);
+    let final = new PIXI.Sprite(sheet.textures["final.png"]);
 
     austin.position.set(696, 113);
     bookstand.position.set(834, 0);
@@ -38,7 +39,8 @@ function build() {
     plant3.position.set(1122, 438);
     sofa.position.set(127, 324);
     table.position.set(202, 196);
-    btn.position.set(502, 499);
+    btn.anchor.set(0.5, 0.5);
+    btn.position.set(684, 561);
     oldstair.position.set(833, 54);
     hammer.position.set(1087, 258);
     menu1.position.set(845, 5);
@@ -53,6 +55,8 @@ function build() {
     menu2.buttonMode = true;
     menu3.interactive = true;
     menu3.buttonMode = true;
+    ok.interactive = true;
+    ok.buttonMode = true;
 
     app.stage.addChild(background, austin, bookstand, globe, logo, plant, plant2, sofa, table, btn, oldstair, plant3);
     function drowhammer () {
@@ -84,6 +88,23 @@ function build() {
         newstair3.position.set(905, 15);
         app.stage.removeChild(oldstair, newstair1, newstair2);
         app.stage.addChild(newstair3, ok, plant3);
+    });
+
+    ok.on('pointertap', () => {
+        final.position.set(391, 53);
+        app.stage.removeChild(ok);
+        app.stage.addChild(final);
+    });
+
+    let ticker = PIXI.Ticker.shared;
+    ticker.deltaMS = 10;
+
+    app.ticker.add((delta) => {
+
+        // rotate the container!
+        // use delta to create frame-independent transform
+        console.log(delta);
+        btn.scale.set(delta)
     });
 }
 
