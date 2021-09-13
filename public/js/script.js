@@ -9,7 +9,7 @@ const circle1 = new PIXI.Graphics();
 const circle2 = new PIXI.Graphics();
 const circle3 = new PIXI.Graphics();
 let count=0;
-let temp=1;
+let temp;
 
 function build() {
 
@@ -79,14 +79,7 @@ function build() {
     menu1.on('pointertap', () => {
         activeItem("menu1");
         ok.position.set(845, 148);
-        /*app.ticker.add((delta) => {
-                newstair1.position.set(905, 5+temp);
-                temp += 0.5;
-                if (5+temp>15) {
-                    app.ticker.stop();
-                }
-        });*/
-        newstair1.position.set(905, 15);
+        animationStair(newstair1);
         app.stage.removeChild(oldstair, newstair2, newstair3);
         app.stage.addChild(newstair1, ok, plant3);
     });
@@ -94,14 +87,7 @@ function build() {
     menu2.on('pointertap', () => {
         activeItem("menu2");
         ok.position.set(975, 148);
-        /*app.ticker.add((delta) => {
-            newstair2.position.set(905, 5+temp);
-            temp += 0.5;
-            if (5+temp>15) {
-                app.ticker.stop();
-            }
-        });*/
-        newstair2.position.set(905, 15);
+        animationStair(newstair2);
         app.stage.removeChild(oldstair, newstair1, newstair3);
         app.stage.addChild(newstair2, ok, plant3);
     });
@@ -109,14 +95,7 @@ function build() {
     menu3.on('pointertap', () => {
         activeItem("menu3");
         ok.position.set(1105, 148);
-        /*app.ticker.add((delta) => {
-            newstair3.position.set(905, 5+temp);
-            temp += 0.5;
-            if (5+temp>15) {
-                app.ticker.stop();
-            }
-        });*/
-        newstair3.position.set(905, 15);
+        animationStair(newstair3);
         app.stage.removeChild(oldstair, newstair1, newstair2);
         app.stage.addChild(newstair3, ok, plant3);
     });
@@ -177,8 +156,16 @@ function build() {
             circle3.endFill();
             app.stage.addChild(circle3, menu3);
         }
+    }
 
-
+    function animationStair (stair) {
+        temp=1;
+        app.ticker.add((delta) => {
+            if (temp<15){
+                stair.position.set(905, 5+temp);
+                temp += 0.2;
+                console.log("temp = ", temp)}
+        });
     }
 }
 
